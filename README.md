@@ -2,13 +2,14 @@
 
 There was some talk of data entry from the harvests last year. Everyone likes good old fashioned pen-and-paper (easy, and accessible) but data entry is becoming old-fashioned, too. The way of the world now is to automate everything you possibly can (from your lighting, to your garage door, to scheduling meetings, to pizza delivery) so I figured I'd take a hack at this. In the end, in order to "fully" automate it, we'll need some additional hardware. 
 
-
 In the interim, a Google document will have to satisfy.
 
-####Requirements:
+####Requirements####
 * docker
 * a public Google spreadsheet (anyone with a link can view)
 * some data you want to graph!
+
+![playing with Grafana](screenshot.png)
 
 Firstly, get docker set up and running. Follow the instructions here. You can install `collectd` or not, it doesn't matter. collectd is interesting and useful, though, and this is a good way to get everything set up initially and introduce you to some docker concepts if you're not familiar with how containers work, especially when you want to have containers that interact with one another.
 
