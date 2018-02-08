@@ -34,7 +34,7 @@ Oh boy oh boy. We have headers, spaces, empty fields, and EOF characters! Everyt
 
 What is influxdb expecting? A string, of course, but where we put the spaces is very important. Anything in the <>'s is optional.
 
-my_measurement,<any_tag=any_string>,<as_many=as_you_want> only_numbers_now=30,<these_are_field_keys=100.51> 1518116988465208044
+`my_measurement,<any_tag=any_string>,<as_many=as_you_want> only_numbers_now=30,<these_are_field_keys=100.51> 1518116988465208044`
 
 That's a lot of nanoseconds.
 The database this goes into is defined by the URL you give your client (curl or whatever else you're using). Here's how I do it:
