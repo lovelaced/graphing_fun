@@ -4,7 +4,7 @@ There was some talk of data entry from the harvests last year. Everyone likes go
 
 In the interim, a Google document will have to satisfy.
 
-####Requirements####
+**Requirements**
 * docker
 * a public Google spreadsheet (anyone with a link can view)
 * some data you want to graph!
