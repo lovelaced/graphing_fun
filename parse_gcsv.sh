@@ -1,6 +1,11 @@
 #!/bin/bash
-url="spreadsheet URL goes here"
-wget "$url" -O todaysharvest
+URL="spreadsheet URL goes here"
+FILENAME="todaysharvest"
+INFLUXDB_PORT="8086"
+INFLUXDB_SERVER="localhost"
+INFLUXDB_DATABASE="collectd"
+
+wget "$url" -O $filename
 
 {
 read
@@ -55,8 +60,8 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 
   lower_ensured=$(echo "$crop,location=$location weight=$weight,pieces=$piece $date" | tr '[:upper:]' '[:lower:]')
   echo $lower_ensured
-  curl -i -XPOST 'http://localhost:8086/write?db=collectd' --data-binary "$lower_ensured"
+  curl -i -XPOST "http://$INFLUXDB_SERVER:$INFLUXDB_PORT/write?db=$INFLUXDB_DATABASE' --data-binary "$lower_ensured"
   sleep 5
 
 done
-} < "todaysharvest"
+} < $FILENAME
