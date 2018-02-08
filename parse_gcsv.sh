@@ -1,6 +1,5 @@
 #!/bin/bash
-
-doc_url='https://docs.google.com/spreadsheets/d/e/2PACX-1vTcIujSZ6oIwHvRJ87Bg0S-vVBNCTYfy3MEjcD-2Apn0Y2Bu2oDxg2NcgA0IfNh6YbsyZfFh7uf9pZN/pub?gid=1392688163&single=true&output=csv'
+url="spreadsheet URL goes here"
 wget "$url" -O todaysharvest
 
 {
