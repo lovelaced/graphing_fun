@@ -1,11 +1,11 @@
 #!/bin/bash
-URL="spreadsheet URL goes here"
+URL="https://docs.google.com/spreadshees/path/to/csv"
 FILENAME="todaysharvest"
 INFLUXDB_PORT="8086"
 INFLUXDB_SERVER="localhost"
 INFLUXDB_DATABASE="collectd"
 
-wget "$url" -O $filename
+wget "$URL" -O $FILENAME
 
 {
 read
@@ -58,9 +58,8 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     date="invalid"
   fi
 
-  lower_ensured=$(echo "$crop,location=$location weight=$weight,pieces=$piece $date" | tr '[:upper:]' '[:lower:]')
-  echo $lower_ensured
-  curl -i -XPOST "http://$INFLUXDB_SERVER:$INFLUXDB_PORT/write?db=$INFLUXDB_DATABASE' --data-binary "$lower_ensured"
+  lower_ensured=$(echo "$crop,location=$location weight=$weight,pieces=$piece $date" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ')
+  curl -i -XPOST $(echo "http://$INFLUXDB_SERVER:$INFLUXDB_PORT/write?db=$INFLUXDB_DATABASE") --data-binary "${lower_ensured}"
   sleep 5
 
 done
