@@ -1,9 +1,10 @@
 #!/bin/bash
-URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTcIujSZ6oIwHvRJ87Bg0S-vVBNCTYfy3MEjcD-2Apn0Y2Bu2oDxg2NcgA0IfNh6YbsyZfFh7uf9pZN/pub?gid=1392688163&single=true&output=csv"
+URL="https://docs.google.com/spreadsheets/your/spreadsheet"
 FILENAME="todaysharvest"
 INFLUXDB_PORT="8086"
 INFLUXDB_SERVER="localhost"
 INFLUXDB_DATABASE="collectd"
+INFLUXDB_TOPLEVEL_SCHEMA="harvest"
 
 wget "$URL" -O $FILENAME
 
@@ -59,7 +60,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     exit 1
   fi
 
-  lower_ensured=$(echo "$crop,location=$location weight=$weight,pieces=$piece $date" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ')
+  lower_ensured=$(echo "$INFLUXDB_TOPLEVEL_SCHEMA,crop=$crop,location=$location weight=$weight,pieces=$piece $date" | tr '[:upper:]' '[:lower:]' | tr '\n' ' ')
   curl -i -XPOST $(echo "http://$INFLUXDB_SERVER:$INFLUXDB_PORT/write?db=$INFLUXDB_DATABASE") --data-binary "${lower_ensured}"
   sleep 5
 
