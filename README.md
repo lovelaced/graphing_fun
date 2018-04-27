@@ -11,6 +11,8 @@ In the interim, a Google document will have to satisfy.
 
 ![playing with Grafana](screenshot.png)
 
+**docker-compose.yml should work for you after you edit it with your domain and path settings IF you have previously set letsencrypt up via certbot on your host. Be sure to check paths to your certs are correct.**
+
 Firstly, get docker set up and running. Follow the instructions here. You can install `collectd` or not, it doesn't matter. collectd is interesting and useful, though, and this is a good way to get everything set up initially and introduce you to some docker concepts if you're not familiar with how containers work, especially when you want to have containers that interact with one another.
 
 https://blog.laputa.io/try-influxdb-and-grafana-by-docker-6b4d50c6a446
