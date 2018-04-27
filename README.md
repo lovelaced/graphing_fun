@@ -1,17 +1,18 @@
 ### Automatic Graphing of Google Document Data
 
-There was some talk of data entry from the harvests last year. Everyone likes good old fashioned pen-and-paper (easy, and accessible) but data entry is becoming old-fashioned, too. The way of the world now is to automate everything you possibly can (from your lighting, to your garage door, to scheduling meetings, to pizza delivery) so I figured I'd take a hack at this. In the end, in order to "fully" automate it, we'll need some additional hardware. 
+Everyone likes good old fashioned pen-and-paper (easy, and accessible) but data entry is becoming old-fashioned, too. The way of the world now is to automate everything you possibly can (from your lighting, to your garage door, to scheduling meetings, to pizza delivery) so I figured I'd take a hack at this.  If the people you have giving you data aren't technical, you may require more technical means to turn simple, manually-entered data into something meaningful.
 
-In the interim, a Google document will have to satisfy.
 
 **Requirements**
 * docker
 * a public Google spreadsheet (anyone with a link can view)
 * some data you want to graph!
 
+You can set this stack up with docker-compose if you have docker and docker-compose installed. The parsing script, as written, should be run with cron or similar on the influxdb/docker host.
+**docker-compose.yml in this repository should work for you after you edit it with your domain and cert path information IF you have previously set letsencrypt up via certbot on your host. Be sure to check paths to your certs are correct.**
+
 ![playing with Grafana](screenshot.png)
 
-**docker-compose.yml should work for you after you edit it with your domain and path settings IF you have previously set letsencrypt up via certbot on your host. Be sure to check paths to your certs are correct.**
 
 Firstly, get docker set up and running. Follow the instructions here. You can install `collectd` or not, it doesn't matter. collectd is interesting and useful, though, and this is a good way to get everything set up initially and introduce you to some docker concepts if you're not familiar with how containers work, especially when you want to have containers that interact with one another.
 
