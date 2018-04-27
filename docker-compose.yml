@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+  grafana:
+    image: grafana/grafana:latest # or probably any other version
+    container_name: grafana
+    restart: always
+    links: 
+      - influx
+    environment:
+      - VIRTUAL_HOST=your.domain # adjust to match your domain name
+      - VIRTUAL_PROTO=https
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=your.domain # adjust to match your domain name
+      - LETSENCRYPT_EMAIL=your@ema.il # adjust to match your email
+
+      - GF_SERVER_CERT_FILE=/etc/letsencrypt/live/your.domain/fullchain.pem # adjust to match your domain name
+      - GF_SERVER_CERT_KEY=/etc/letsencrypt/live/your.domain/privkey.pem # adjust to match your domain name
+      - GF_SERVER_PROTOCOL=https
+
+      - GF_SERVER_DOMAIN=your.domain # adjust to match your domain name
+      - GF_SECURITY_ADMIN_USER=admin # adjust to create Grafana admin account
+      - GF_SECURITY_ADMIN_PASSWORD=admin # adjust to set Grafana admin password
+      - GF_AUTH_ANONYMOUS_ENABLED=false # set to true to enable anonymous access to dashboards
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./grafana:/var/lib/grafana # this is to save grafana's state/plugins/dashboards on the docker host
+    ports:
+      - "3000:3000"
+
+  influx:
+    image: influxdb:latest
+    container_name: influx
+    restart: always
+    volumes:
+      - ./dockerconfs/influxdb:/var/lib/influxdb  # saves influx db outside container
+      - ./dockerconfs/influxdb.conf:/etc/influxdb/influxdb.conf:ro  # saves influx conf on host
+      - ./dockerconfs/types.db:/usr/share/collectd/types.db:ro # saves a specific type file for a db on host
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=crops # set any other to create database on initialization
+      - INFLUXDB_HTTP_ENABLED=true
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion:latest
+    container_name: letsencrypt
+    restart: always
+    volumes:
+      - /etc/letsencrypt:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+ 
+volumes:
+  influx-data:
+    driver: local
+  grafana-data:
+    driver: local
